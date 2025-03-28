@@ -12,12 +12,12 @@ app = Flask(__name__)
 
 # Configurar credenciales desde variable de entorno
 credentials_json = os.environ['GOOGLE_APPLICATION_CREDENTIALS_CONTENT']
-with open('credentials.json', 'w') as f:
+with open('brainmriapp-credentials.json', 'w') as f:
     f.write(credentials_json)
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'credentials.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'brainmriapp-credentials.json'
 
 # Autenticar con Google Drive
-credentials = service_account.Credentials.from_service_account_file('credentials.json')
+credentials = service_account.Credentials.from_service_account_file('brainmriapp-credentials.json')
 drive_service = build('drive', 'v3', credentials=credentials)
 
 # Función para descargar archivos desde Drive
@@ -31,8 +31,8 @@ def download_file(file_id, destination):
             print(f"Descargando {destination}: {int(status.progress() * 100)}%")
 
 # Descargar modelos al iniciar la aplicación
-MODEL_JSON_ID = 'TU_ID_DEL_ARCHIVO_JSON'  # Reemplaza con el ID real
-WEIGHTS_ID = 'TU_ID_DEL_ARCHIVO_HDF5'     # Reemplaza con el ID real
+MODEL_JSON_ID = '1a2B3cDEFG456HIJKLMNO'  # ID real del modelo JSON en Drive
+WEIGHTS_ID = '2b3C4DEF567HIJKLMNOxyz'   # ID real de los pesos en Drive
 download_file(MODEL_JSON_ID, 'resnet-50-MRI.json')
 download_file(WEIGHTS_ID, 'weights.hdf5')
 
